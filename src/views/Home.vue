@@ -1,20 +1,33 @@
 <template>
-  <div class="home">
+  <div class="home-container">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <ExamplePosition />
+    <div class="home-component-container"><FinalPosition /></div>
+    <div class="home-component-container"><CalcFirstIntersection /></div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-import ExamplePosition from "@/components/ExamplePosition.vue";
+import FinalPosition from "@/components/FinalPosition.vue";
+import CalcFirstIntersection from "@/components/CalcFirstIntersection.vue";
 
 export default {
   name: "Home",
   components: {
-    ExamplePosition,
+    FinalPosition,
+    CalcFirstIntersection,
   },
 };
 </script>
+
+<style scoped>
+.home-container {
+  height: 100vh;
+  background-color: #ebebeb;
+}
+.home-component-container {
+  padding: 50px;
+}
+</style>
