@@ -5,7 +5,8 @@
     </button>
     <div>
       <h2>Your first intersection</h2>
-      {{ this.position.x }}, {{ this.position.y }}
+      <!-- {{ this.position.x }}, {{ this.position.y }} -->
+      {{ this.firstIntersection.x }}, {{ this.firstIntersection.y }}
     </div>
   </div>
 </template>
@@ -15,9 +16,6 @@ export default {
   name: "CalcFirstIntersection",
   data() {
     return {
-      inputData: "",
-      xGrid: Number,
-      yGrid: Number,
       position: {
         x: 0,
         y: 0,
@@ -30,17 +28,18 @@ export default {
       counter: 0,
       testArray: [],
       testInput: "",
+      firstIntersection: {},
     };
   },
   mounted() {
     // resetting data values
-    this.xGrid = 0;
-    this.yGrid = 0;
     this.counter = 0;
     this.allPositions = [];
     // input data
     this.testArray = ["^", "^", "<", "<", "v", ">", ">", ">"];
-    this.testInput = "^^<<v>>> ";
+
+    this.testInput = "^^<<v>>> "; // You will walk in a square and revisit { x = 0, y = 1 } on the 7th instruction.
+    // this.testInput = "><>>>>"; // You will revisit { x = 0, y = 0 } on the second instruction.
 
     /*
     this.inputData =
@@ -49,16 +48,6 @@ export default {
   },
   methods: {
     calcFirstIntersection: function () {
-      // console.log("input är " + input + " input length är " + input.length);
-      // this.testArray.forEach((element) => console.log(element));
-      // while (this.counter < this.testArray.length) {
-      //   console.log(this.testArray[this.counter]);
-      //   this.counter += 1;
-      // }
-
-      // while (this.counter < this.testArray.length) {
-      //   this.counter += 1;
-      // }
 
       let splitInput = this.testInput.split("");
 
@@ -76,7 +65,7 @@ export default {
             );
 
             this.allPositions.push({ ...this.currentPosition });
-            console.log(this.allPositions);
+            // console.log(this.allPositions);
 
             //updates counter
             this.counter++;
@@ -96,7 +85,7 @@ export default {
 
             //pushes current position to allPositions array
             this.allPositions.push({ ...this.currentPosition });
-            console.log(this.allPositions);
+            // console.log(this.allPositions);
 
             //updates counter
             this.counter++;
@@ -116,7 +105,7 @@ export default {
 
             //pushes current position to allPositions array
             this.allPositions.push({ ...this.currentPosition });
-            console.log(this.allPositions);
+            // console.log(this.allPositions);
 
             //updates counter
             this.counter++;
@@ -136,7 +125,7 @@ export default {
 
             //pushes current position to allPositions array
             this.allPositions.push({ ...this.currentPosition });
-            console.log(this.allPositions);
+            // console.log(this.allPositions);
 
             //updates counter
             this.counter++;
@@ -144,6 +133,36 @@ export default {
             break;
         }
       });
+
+      console.log(
+        "logg av allPositions efter switch: " +
+          JSON.stringify(this.allPositions)
+      );
+
+      // calculates first intersection
+      let map = {};
+
+      let result = false;
+
+      for (let i = 0; i < this.allPositions.length; i++) {
+        // check if object contains entry with this element as key
+        if (map[this.allPositions[i]]) {
+          this.firstIntersection = this.allPositions[i];
+          result = true;
+          // terminate the loop
+          break;
+        }
+        // add entry in object with the element as key
+        map[this.allPositions[i]] = true;
+      }
+      if (result) {
+        console.log(
+          "Array contains duplicate elements " +
+            JSON.stringify(this.firstIntersection)
+        );
+      } else {
+        console.log("Array does not contain duplicate elements");
+      }
     },
   },
 };
